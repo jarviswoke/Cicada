@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Search, Bell, Lock, LogOut } from "lucide-react";
 
 function Navbar() {
   const { logout, user } = useAuth();
@@ -41,7 +42,7 @@ function Navbar() {
     <header className="topbar">
       {/* Search */}
       <form className="topbar-search" onSubmit={handleSearch}>
-        <span className="topbar-search-icon">🔍</span>
+        <Search size={16} strokeWidth={2} className="topbar-search-icon" />
         <input
           type="text"
           placeholder="Search bugs, projects..."
@@ -55,7 +56,7 @@ function Navbar() {
       <div className="topbar-actions">
         {/* Notifications bell */}
         <button className="topbar-icon-btn" aria-label="Notifications">
-          🔔
+          <Bell size={18} strokeWidth={1.8} />
           <span className="topbar-notif-dot" />
         </button>
 
@@ -83,13 +84,15 @@ function Navbar() {
                   navigate("/change-password");
                 }}
               >
-                🔐 Change Password
+                <Lock size={15} strokeWidth={1.8} />
+                Change Password
               </button>
               <button
                 className="topbar-dropdown-item topbar-dropdown-item--danger"
                 onClick={handleLogout}
               >
-                🚪 Logout
+                <LogOut size={15} strokeWidth={1.8} />
+                Logout
               </button>
             </div>
           )}

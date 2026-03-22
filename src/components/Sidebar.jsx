@@ -1,14 +1,28 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import {
+  LayoutDashboard,
+  Bug,
+  FilePlus,
+  FolderOpen,
+  BarChart3,
+  Users,
+  Lock,
+  ChevronLeft,
+  ChevronRight,
+  Menu,
+  X,
+  Shield,
+} from "lucide-react";
 
 const links = [
-  { to: "/dashboard", label: "Dashboard", icon: "📊" },
-  { to: "/bugs", label: "Bugs", icon: "🐞" },
-  { to: "/create-bug", label: "Create Bug", icon: "➕" },
-  { to: "/projects", label: "Projects", icon: "📁" },
-  { to: "/reports", label: "Reports", icon: "📈" },
-  { to: "/team", label: "Team", icon: "👥" },
-  { to: "/change-password", label: "Change Password", icon: "🔐" },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/bugs", label: "Bugs", icon: Bug },
+  { to: "/create-bug", label: "Create Bug", icon: FilePlus },
+  { to: "/projects", label: "Projects", icon: FolderOpen },
+  { to: "/reports", label: "Reports", icon: BarChart3 },
+  { to: "/team", label: "Team", icon: Users },
+  { to: "/change-password", label: "Change Password", icon: Lock },
 ];
 
 function Sidebar() {
@@ -23,7 +37,7 @@ function Sidebar() {
         onClick={() => setMobileOpen(!mobileOpen)}
         aria-label="Toggle sidebar"
       >
-        {mobileOpen ? "✕" : "☰"}
+        {mobileOpen ? <X size={18} /> : <Menu size={18} />}
       </button>
 
       {/* Mobile overlay */}
@@ -40,38 +54,61 @@ function Sidebar() {
           mobileOpen ? " sidebar--mobile-open" : ""
         }`}
       >
+        {/* Brand — always rendered, CSS handles hiding */}
         <div className="sidebar-brand">
-          <span className="sidebar-brand-icon">🐞</span>
-          {!collapsed && (
-            <span className="sidebar-brand-text">Ciccado</span>
-          )}
+          <div className="sidebar-logo-box">
+            <Shield size={20} strokeWidth={2.2} />
+          </div>
+          <div className="sidebar-brand-text">
+            <h1>Ciccado</h1>
+            <p>Bug Tracker</p>
+          </div>
         </div>
 
-        <nav>
+        {/* Navigation */}
+        <nav className="sidebar-nav-wrapper">
+          <span className="sidebar-nav-section-label">Main Menu</span>
           <ul className="sidebar-nav">
-            {links.map((link) => (
-              <li key={link.to}>
-                <NavLink
-                  to={link.to}
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <span className="sidebar-nav-icon">{link.icon}</span>
-                  {!collapsed && <span>{link.label}</span>}
-                </NavLink>
-              </li>
-            ))}
+            {links.map((link) => {
+              const IconComponent = link.icon;
+              return (
+                <li key={link.to}>
+                  <NavLink
+                    to={link.to}
+                    className={({ isActive }) =>
+                      `sidebar-nav-link${isActive ? " active" : ""}`
+                    }
+                    onClick={() => setMobileOpen(false)}
+                    title={collapsed ? link.label : undefined}
+                  >
+                    <span className="sidebar-nav-icon">
+                      <IconComponent size={20} strokeWidth={1.8} />
+                    </span>
+                    <span className="sidebar-nav-label">{link.label}</span>
+                  </NavLink>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
         {/* Collapse toggle - desktop only */}
-        <button
-          className="sidebar-collapse-btn"
-          onClick={() => setCollapsed(!collapsed)}
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          {collapsed ? "›" : "‹"}
-        </button>
+        <div className="sidebar-footer">
+          <button
+            className="sidebar-collapse-btn"
+            onClick={() => setCollapsed(!collapsed)}
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {collapsed ? (
+              <ChevronRight size={16} strokeWidth={2} />
+            ) : (
+              <>
+                <ChevronLeft size={16} strokeWidth={2} />
+                <span className="sidebar-collapse-label">Collapse</span>
+              </>
+            )}
+          </button>
+        </div>
       </aside>
     </>
   );
