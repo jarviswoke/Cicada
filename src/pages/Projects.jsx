@@ -70,7 +70,7 @@ function Projects() {
             className="btn btn-primary"
             onClick={() => setShowForm((v) => !v)}
           >
-            {showForm ? "✕ Cancel" : "➕ Create Project"}
+            {showForm ? "✕ Cancel" : "Create Project"}
           </button>
         )}
       </div>
@@ -121,7 +121,7 @@ function Projects() {
                 {project.description || "No description"}
               </p>
               <p style={{ marginTop: "0.75rem", fontSize: "0.9rem" }}>
-                <strong>🐞 Bugs:</strong> {bugCountByProject.get(project._id) || 0}
+                <strong>Bugs:</strong> {bugCountByProject.get(project._id) || 0}
               </p>
               {project.createdBy && (
                 <p className="muted-text" style={{ fontSize: "0.8rem", marginTop: "0.4rem" }}>

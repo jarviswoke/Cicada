@@ -2,7 +2,6 @@ import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
-import QuickActionButton from "./components/QuickActionButton";
 
 // Existing pages
 import BugDetails from "./pages/BugDetails";
@@ -14,7 +13,6 @@ import Login from "./pages/Login";
 import Projects from "./pages/Projects";
 import Register from "./pages/Register";
 
-// New pages from Figma
 import Reports from "./pages/Reports";
 import Team from "./pages/Team";
 import NotFound from "./pages/NotFound";
@@ -29,7 +27,6 @@ function ProtectedLayout() {
           <Outlet />
         </div>
       </div>
-      <QuickActionButton />
     </div>
   );
 }

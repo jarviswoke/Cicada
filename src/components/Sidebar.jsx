@@ -67,7 +67,6 @@ function Sidebar() {
 
         {/* Navigation */}
         <nav className="sidebar-nav-wrapper">
-          <span className="sidebar-nav-section-label">Main Menu</span>
           <ul className="sidebar-nav">
             {links.map((link) => {
               const IconComponent = link.icon;

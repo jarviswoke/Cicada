@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Search, Bell, Lock, LogOut } from "lucide-react";
+import { Search, Lock, LogOut } from "lucide-react";
 
 function Navbar() {
   const { logout, user } = useAuth();
@@ -52,15 +52,8 @@ function Navbar() {
         />
       </form>
 
-      {/* Right side */}
+      {/* Profile */}
       <div className="topbar-actions">
-        {/* Notifications bell */}
-        <button className="topbar-icon-btn" aria-label="Notifications">
-          <Bell size={18} strokeWidth={1.8} />
-          <span className="topbar-notif-dot" />
-        </button>
-
-        {/* Profile dropdown */}
         <div className="topbar-profile" ref={dropdownRef}>
           <button
             className="topbar-avatar"
