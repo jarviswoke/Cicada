@@ -2212,3 +2212,153 @@ textarea {
     align-items: stretch;
   }
 }
+
+/* ============================================================
+   BUG LIFECYCLE STEPPER
+   ============================================================ */
+.bug-lifecycle {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bug-lifecycle::-webkit-scrollbar {
+  height: 4px;
+}
+
+.bug-lifecycle::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 2px;
+}
+
+.bug-lifecycle__track {
+  display: flex;
+  align-items: flex-start;
+  min-width: 540px;
+}
+
+.bug-lifecycle__step {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.bug-lifecycle__step:first-child {
+  flex: 0 0 auto;
+}
+
+.bug-lifecycle__step:last-child {
+  flex: 0 0 auto;
+}
+
+/* ---- Connector line ---- */
+.bug-lifecycle__connector {
+  flex: 1;
+  height: 3px;
+  min-width: 20px;
+  margin-top: 15px;              /* vertically center on circle */
+  background: var(--gray-200);
+  border-radius: 2px;
+  transition: background 0.4s ease;
+}
+
+.bug-lifecycle__connector--filled {
+  background: var(--blue-500);
+}
+
+/* ---- Circle wrap (circle + label stack) ---- */
+.bug-lifecycle__circle-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* ---- Circle ---- */
+.bug-lifecycle__circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Completed */
+.bug-lifecycle__circle--completed {
+  background: var(--blue-500);
+  color: white;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+/* Active */
+.bug-lifecycle__circle--active {
+  background: white;
+  border: 3px solid var(--blue-500);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12),
+              0 2px 8px rgba(37, 99, 235, 0.2);
+}
+
+.bug-lifecycle__circle--active .bug-lifecycle__pulse {
+  width: 10px;
+  height: 10px;
+  background: var(--blue-500);
+  border-radius: 50%;
+  animation: lifecyclePulse 2s ease-in-out infinite;
+}
+
+/* Pending */
+.bug-lifecycle__circle--pending {
+  background: var(--gray-50);
+  border: 2px solid var(--gray-300);
+}
+
+/* ---- Label ---- */
+.bug-lifecycle__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.bug-lifecycle__label--completed {
+  color: var(--blue-600);
+  font-weight: 600;
+}
+
+.bug-lifecycle__label--active {
+  color: var(--blue-600);
+  font-weight: 700;
+}
+
+.bug-lifecycle__label--pending {
+  color: var(--gray-400);
+}
+
+/* ---- Timestamp ---- */
+.bug-lifecycle__timestamp {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  margin-top: -0.2rem;
+}
+
+/* ---- Pulse keyframes ---- */
+@keyframes lifecyclePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}

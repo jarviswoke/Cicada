@@ -9,6 +9,7 @@ import {
 import { useAuth } from "../context/AuthContext";
 import StatusBadge from "../components/StatusBadge";
 import PriorityBadge from "../components/PriorityBadge";
+import BugLifecycle from "../components/BugLifecycle";
 
 const STATUS_OPTIONS = [
   "New", "Assigned", "In Progress", "Fixed", "Testing", "Closed", "Reopened",
@@ -108,6 +109,13 @@ function BugDetails() {
       >
         ← Back to bugs
       </button>
+
+      {/* Bug Lifecycle Visualization */}
+      <BugLifecycle
+        status={bug.status}
+        createdAt={bug.createdAt}
+        resolvedAt={bug.resolvedAt}
+      />
 
       {/* Two-column layout */}
       <div className="detail-grid">
