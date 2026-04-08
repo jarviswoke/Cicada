@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createBugRequest, getProjectsRequest } from "../api/api";
+import { useAuth } from "../context/AuthContext";
+import { canCreateBugs } from "../utils/permissions";
 
 function CreateBug() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const hasCreatePermission = canCreateBugs(user?.role);
   const [projects, setProjects] = useState([]);
   const [form, setForm] = useState({
     title: "",
@@ -16,6 +20,10 @@ function CreateBug() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!hasCreatePermission) {
+      return;
+    }
+
     const loadProjects = async () => {
       try {
         const data = await getProjectsRequest();
@@ -28,10 +36,16 @@ function CreateBug() {
       }
     };
     loadProjects();
-  }, []);
+  }, [hasCreatePermission]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!hasCreatePermission) {
+      setError("You do not have permission to create bugs.");
+      return;
+    }
+
     setLoading(true);
     setError("");
     try {
@@ -50,6 +64,13 @@ function CreateBug() {
         <h1>Create Bug</h1>
       </div>
 
+      {!hasCreatePermission && (
+        <div className="page-feedback error-text" style={{ marginBottom: "1rem" }}>
+          You do not have permission to create bugs.
+        </div>
+      )}
+
+      {hasCreatePermission && (
       <form className="card form-card" onSubmit={onSubmit}>
         <div className="form-group">
           <label>Title</label>
@@ -119,6 +140,7 @@ function CreateBug() {
           {loading ? "Creating..." : "Create Bug"}
         </button>
       </form>
+      )}
     </section>
   );
 }

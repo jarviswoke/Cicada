@@ -4,8 +4,12 @@ import BugTable from "../components/BugTable";
 import CreateBugModal from "../components/CreateBugModal";
 import EmptyState from "../components/EmptyState";
 import { Search } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { canCreateBugs } from "../utils/permissions";
 
 function Bugs() {
+  const { user } = useAuth();
+  const hasCreatePermission = canCreateBugs(user?.role);
   const [bugs, setBugs] = useState([]);
   const [search, setSearch] = useState("");
   const [severityFilter, setSeverityFilter] = useState("");
@@ -55,9 +59,11 @@ function Bugs() {
             {filteredBugs.length} bug{filteredBugs.length !== 1 ? "s" : ""} found
           </p>
         </div>
-        <button className="btn btn-primary" onClick={() => setCreateBugOpen(true)}>
-          ➕ New Bug
-        </button>
+        {hasCreatePermission && (
+          <button className="btn btn-primary" onClick={() => setCreateBugOpen(true)}>
+            ➕ New Bug
+          </button>
+        )}
       </div>
 
       {/* Filters */}
@@ -124,7 +130,9 @@ function Bugs() {
         <BugTable bugs={filteredBugs} />
       )}
 
-      <CreateBugModal open={createBugOpen} onOpenChange={setCreateBugOpen} />
+      {hasCreatePermission && (
+        <CreateBugModal open={createBugOpen} onOpenChange={setCreateBugOpen} />
+      )}
     </section>
   );
 }

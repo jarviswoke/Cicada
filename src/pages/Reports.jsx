@@ -1,7 +1,4 @@
-// Converted from Figma TSX: ReportsPage.tsx
-// Removed: TypeScript types, motion animations, Tailwind classes
-// Changed: static mock data → real API data from getBugsRequest
-// Changed: Tailwind → your CSS classes
+
 
 import { useState, useEffect } from "react";
 import {
@@ -63,7 +60,7 @@ function Reports() {
         <div>
           <h1>Reports</h1>
           <p className="muted-text" style={{ fontSize: "0.9rem", marginTop: "0.25rem" }}>
-            Analyze bug trends and team performance
+            Analyze bug trends and project health
           </p>
         </div>
         <button className="btn btn-primary">📥 Export Report</button>

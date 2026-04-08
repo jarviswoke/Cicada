@@ -19,6 +19,7 @@ import CreateBugModal from "../components/CreateBugModal";
 import StatusBadge from "../components/StatusBadge";
 import PriorityBadge from "../components/PriorityBadge";
 import { useAuth } from "../context/AuthContext";
+import { canCreateBugs } from "../utils/permissions";
 
 const STATUS_COLORS = {
   New: "#EF4444",
@@ -33,6 +34,7 @@ const STATUS_COLORS = {
 
 function Dashboard() {
   const { user } = useAuth();
+  const hasCreatePermission = canCreateBugs(user?.role);
   const [bugs, setBugs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -101,9 +103,11 @@ function Dashboard() {
             Track and manage your bug reports
           </p>
         </div>
-        <button className="btn btn-primary" onClick={() => setCreateBugOpen(true)}>
-          ➕ New Bug
-        </button>
+        {hasCreatePermission && (
+          <button className="btn btn-primary" onClick={() => setCreateBugOpen(true)}>
+            ➕ New Bug
+          </button>
+        )}
       </div>
 
       {/* Stats Grid */}
@@ -217,7 +221,9 @@ function Dashboard() {
         )}
       </div>
 
-      <CreateBugModal open={createBugOpen} onOpenChange={setCreateBugOpen} />
+      {hasCreatePermission && (
+        <CreateBugModal open={createBugOpen} onOpenChange={setCreateBugOpen} />
+      )}
     </section>
   );
 }

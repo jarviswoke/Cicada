@@ -1,31 +1,37 @@
- import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CreateBugModal from "./CreateBugModal";
+import { useAuth } from "../context/AuthContext";
+import { canCreateBugs } from "../utils/permissions";
 
 const actions = [
   { icon: "🐞", label: "New Bug",      color: "fab-action-btn--blue",   key: "bug" },
-  { icon: "👥", label: "Team",         color: "fab-action-btn--purple",  key: "team" },
   { icon: "📈", label: "Reports",      color: "fab-action-btn--green",   key: "reports" },
 ];
 
 function QuickActionButton() {
+  const { user } = useAuth();
+  const hasCreatePermission = canCreateBugs(user?.role);
   const [open, setOpen] = useState(false);
   const [createBugOpen, setCreateBugOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleAction = (key) => {
     setOpen(false);
-    if (key === "bug") setCreateBugOpen(true);
-    if (key === "team") navigate("/team");
+    if (key === "bug" && hasCreatePermission) setCreateBugOpen(true);
     if (key === "reports") navigate("/reports");
   };
+
+  const visibleActions = hasCreatePermission
+    ? actions
+    : actions.filter((action) => action.key !== "bug");
 
   return (
     <>
       <div className="fab-container">
         {open && (
           <div className="fab-actions">
-            {actions.map((action) => (
+            {visibleActions.map((action) => (
               <button
                 key={action.key}
                 className={`fab-action-btn ${action.color}`}
@@ -49,7 +55,9 @@ function QuickActionButton() {
         </button>
       </div>
 
-      <CreateBugModal open={createBugOpen} onOpenChange={setCreateBugOpen} />
+      {hasCreatePermission && (
+        <CreateBugModal open={createBugOpen} onOpenChange={setCreateBugOpen} />
+      )}
     </>
   );
 }

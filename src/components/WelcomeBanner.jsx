@@ -28,7 +28,7 @@ function WelcomeBanner() {
           </div>
           <p className="welcome-banner-subtitle">
             Hi {user?.name || user?.role || "there"}! Get started by exploring the
-            dashboard, managing bugs, or checking out your team.
+            dashboard, managing bugs, or reviewing project reports.
           </p>
           <div className="welcome-banner-actions">
             <button className="btn btn-white" onClick={handleClose}>

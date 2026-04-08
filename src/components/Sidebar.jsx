@@ -6,14 +6,14 @@ import {
   FilePlus,
   FolderOpen,
   BarChart3,
-  Users,
-  Lock,
   ChevronLeft,
   ChevronRight,
   Menu,
   X,
   Shield,
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { canCreateBugs } from "../utils/permissions";
 
 const links = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -21,13 +21,16 @@ const links = [
   { to: "/create-bug", label: "Create Bug", icon: FilePlus },
   { to: "/projects", label: "Projects", icon: FolderOpen },
   { to: "/reports", label: "Reports", icon: BarChart3 },
-  { to: "/team", label: "Team", icon: Users },
-  { to: "/change-password", label: "Change Password", icon: Lock },
 ];
 
 function Sidebar() {
+  const { user } = useAuth();
+  const hasCreatePermission = canCreateBugs(user?.role);
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const visibleLinks = hasCreatePermission
+    ? links
+    : links.filter((link) => link.to !== "/create-bug");
 
   return (
     <>
@@ -68,7 +71,7 @@ function Sidebar() {
         {/* Navigation */}
         <nav className="sidebar-nav-wrapper">
           <ul className="sidebar-nav">
-            {links.map((link) => {
+            {visibleLinks.map((link) => {
               const IconComponent = link.icon;
               return (
                 <li key={link.to}>

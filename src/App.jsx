@@ -14,7 +14,6 @@ import Projects from "./pages/Projects";
 import Register from "./pages/Register";
 
 import Reports from "./pages/Reports";
-import Team from "./pages/Team";
 import NotFound from "./pages/NotFound";
 
 function ProtectedLayout() {
@@ -52,7 +51,6 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/reports" element={<Reports />} />
-        <Route path="/team" element={<Team />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

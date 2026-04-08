@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { createBugRequest, getProjectsRequest } from "../api/api";
+import { useAuth } from "../context/AuthContext";
+import { canCreateBugs } from "../utils/permissions";
 
 function CreateBugModal({ open, onOpenChange }) {
+  const { user } = useAuth();
+  const hasCreatePermission = canCreateBugs(user?.role);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -15,7 +19,7 @@ function CreateBugModal({ open, onOpenChange }) {
   });
 
   useEffect(() => {
-    if (open) {
+    if (open && hasCreatePermission) {
       setError("");
       setSuccess("");
       getProjectsRequest()
@@ -27,12 +31,18 @@ function CreateBugModal({ open, onOpenChange }) {
         })
         .catch(() => setError("Failed to load projects"));
     }
-  }, [open]);
+  }, [open, hasCreatePermission]);
 
   if (!open) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!hasCreatePermission) {
+      setError("You do not have permission to create bugs.");
+      return;
+    }
+
     if (!formData.title.trim() || !formData.project) {
       setError("Title and project are required");
       return;
