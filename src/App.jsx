@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
 
-// Existing pages
+// Existing pages...
 import BugDetails from "./pages/BugDetails";
 import Bugs from "./pages/Bugs";
 import ChangePassword from "./pages/ChangePassword";
@@ -16,6 +16,7 @@ import Register from "./pages/Register";
 import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
 
+// Layout component for protected routes, includes Navbar and Sidebar
 function ProtectedLayout() {
   return (
     <div className="app-layout">

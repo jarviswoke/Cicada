@@ -6,7 +6,7 @@ const LIFECYCLE_STAGES = [
   "Testing",
   "Closed",
 ];
-
+ // BugLifecycle component to visually represent the lifecycle of a bug with stages and timestamps
 function BugLifecycle({ status, createdAt, resolvedAt }) {
   // Find current stage index; default to 0 ("New") for unknown/missing status
   const currentIndex = Math.max(

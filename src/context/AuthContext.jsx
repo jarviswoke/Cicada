@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { getMeRequest, loginRequest, registerRequest } from "../api/api";
 
+// AuthContext to manage authentication state and provide login, register, and logout functions to the app
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {

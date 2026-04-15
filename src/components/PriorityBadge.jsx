@@ -9,7 +9,7 @@ const priorityConfig = {
   Medium: { label: "Medium", icon: "🟡", className: "badge-medium" },
   Low: { label: "Low", icon: "🟢", className: "badge-low" },
 };
-
+// priority badges for task list, with color coding and icons based on priority level
 function PriorityBadge({ priority }) {
   const config = priorityConfig[priority] || {
     label: priority || "Unknown",
